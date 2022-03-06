@@ -14,4 +14,5 @@ In the folder sqliteTutorial you can find a short example for the main usecases 
 
 ## Binance API
 
-As a first excercise/try we will use the Binance REST API.
+We are using the pip python-binance to access the binance spot api.
+To better understand the API we used Postman. Binance provides a .json file for Postman. It can be found in the repository too.
