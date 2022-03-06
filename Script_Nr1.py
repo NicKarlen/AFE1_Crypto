@@ -1,4 +1,3 @@
-from sre_compile import isstring
 from binance import Client
 import pandas as pd
 
@@ -15,5 +14,10 @@ def getApiAccessKey(filename):
     }
 
 
-print(getApiAccessKey('Binance_key.txt')['api_key'])
-print(getApiAccessKey('Binance_key.txt')['secret_key'])
+BinanceApiKeys = getApiAccessKey('Binance_key.txt')
+
+print(BinanceApiKeys['api_key'])
+print(BinanceApiKeys['secret_key'])
+
+# continue
+# https://youtu.be/_IV1qfSPPwI?t=318
