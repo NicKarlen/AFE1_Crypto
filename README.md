@@ -2,6 +2,11 @@
 
 Cryptocurrency arbitrage bot.
 
+### What is needed to run the code
+
+- python version: 3.10.1
+- pip python-binance
+
 ## Database
 
 For simplicity reasons we use sqlite as our main database. SQLite is already integrated in to python and doesn't need aditional services.
