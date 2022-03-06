@@ -16,8 +16,5 @@ orders = cursor.fetchall()
 for order in orders:
     print(order)
 
-# Commit our command
-conn.commit()
-
 # Close our connection
 conn.close()

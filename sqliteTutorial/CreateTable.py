@@ -1,6 +1,7 @@
 import sqlite3
 
 # sqlite is a fast light weight sql database, which comes with python. It doesn't need any extra service.
+# Documentation can be found here: https://docs.python.org/3/library/sqlite3.html
 # Connect to database 'database.db' or create one if it doesn't exist.
 conn = sqlite3.connect('database.db')
 
