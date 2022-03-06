@@ -8,11 +8,19 @@ conn = sqlite3.connect('database.db')
 cursor = conn.cursor()
 
 # Create a table
-cursor.execute("""CREATE TABLE customers (
-    order_ID DATATYPE,
-    order_type DATATYPE,
-    tradingpair DATATYPE,
-    amount DATATYPE,
-    price DATATYPE,
-    time DATATYPE,
+cursor.execute("""CREATE TABLE orders (
+    order_ID integer,
+    order_type text,
+    tradingpair text,
+    amount integer,
+    price integer,
+    time text
     )""")
+
+# DATATYPE for sqlite = NULL, INTEGER, REAL, TEXT, BLOB
+
+# Commit our command
+conn.commit()
+
+# Close our connection
+conn.close()
