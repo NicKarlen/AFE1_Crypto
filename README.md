@@ -5,7 +5,7 @@ Cryptocurrency arbitrage bot.
 ### What is needed to run the code
 
 - python version: 3.10.1
-- pip python-binance
+- install all pip's form the requirements.txt
 
 ## Database
 
