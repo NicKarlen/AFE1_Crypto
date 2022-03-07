@@ -1,6 +1,7 @@
 import os
 from binance import Client
 import pandas as pd
+import sqlite3
 
 # function to get the api_keys from the locally safed file
 
@@ -45,3 +46,17 @@ print(candles1min_pd)
 # candles = client.get_ticker(symbol='BTCUSDT')
 # candles_pd = pd.DataFrame.from_dict(candles, orient='index')
 # print(candles_pd)
+
+
+def writeDataframeInDB(df, tablename):
+    # Connect to database 'database.db'
+    con = sqlite3.connect('database.db')
+    # Create a cursor for db
+    cursor = con.cursor()
+    # write df to sql database
+    df.to_sql(tablename, con, if_exists="replace")
+    # close db connenction
+    con.close()
+
+
+writeDataframeInDB(candles1min_pd, '1_Min_BTCUSDT')
