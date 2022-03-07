@@ -25,8 +25,10 @@ client = Client(BinanceApiKeys['api_key'], BinanceApiKeys['api_secret'])
 # https://youtu.be/_IV1qfSPPwI?t=318
 
 print('Timestamp before API call:  ' + str(datetime.now()))
+
 candles1min = client.get_historical_klines(
     "BTCUSDT", Client.KLINE_INTERVAL_1MINUTE, "1 minute ago UTC")
+
 print('Timestamp after API call:   ' + str(datetime.now()))
 
 
