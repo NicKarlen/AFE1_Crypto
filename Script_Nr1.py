@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 from binance import Client
 import pandas as pd
@@ -26,9 +27,10 @@ client = Client(BinanceApiKeys['api_key'], BinanceApiKeys['api_secret'])
 # continue
 # https://youtu.be/_IV1qfSPPwI?t=318
 
+print('Timestamp before API call:  ' + str(datetime.now()))
 candles1min = client.get_historical_klines(
     "BTCUSDT", Client.KLINE_INTERVAL_1MINUTE, "1 minute ago UTC")
-
+print('Timestamp after API call:   ' + str(datetime.now()))
 
 # candles1min_pd = pd.DataFrame(columns=['Open time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close time',
 #                                        'Quote asset volume', 'Number of trades', 'Taker buy base asset volume', 'Taker buy quote asset volume', 'Ignore'])
