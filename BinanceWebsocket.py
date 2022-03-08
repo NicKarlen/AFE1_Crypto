@@ -1,6 +1,8 @@
+import json
 import os
 import websockets
 import asyncio
+from datetime import datetime
 
 # function to get the api_keys from the locally safed file
 
@@ -26,6 +28,8 @@ async def listen():
     async with websockets.connect(url) as ws:
         while True:
             msg = await ws.recv()
-            print(msg)
+            d = json.loads(msg)
+            print(d['data']['p'])
+            print('Timestamp API call:  ' + str(datetime.now()))
 
 asyncio.get_event_loop().run_until_complete(listen())
