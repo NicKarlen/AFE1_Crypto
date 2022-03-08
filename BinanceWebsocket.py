@@ -21,6 +21,7 @@ BinanceApiKeys = getApiAccessKey('Binance_key.txt')
 
 
 # Documentation for websockets and the url's where found here: https://binance-docs.github.io/apidocs/futures/en/#websocket-market-streams
+# And a tutorial right here: https://www.youtube.com/watch?v=tgtb9iucOts
 
 async def listen():
     url = "wss://fstream.binance.com/stream?streams=btcusdt@aggTrade/btcusdt@markPrice"
