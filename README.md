@@ -14,5 +14,7 @@ In the folder sqliteTutorial you can find a short example for the main usecases 
 
 ## Binance API
 
-We are using the pip python-binance to access the binance spot api.
-To better understand the API we used Postman. Binance provides a .json file for Postman. It can be found in the repository too.
+(We are using the pip python-binance to access the binance spot api.
+To better understand the API we used Postman. Binance provides a .json file for Postman. It can be found in the repository too.) --> OLD
+
+Best approch until now is using a websocket from the Binance API. We get a price feed with ~30 updates/sec.
