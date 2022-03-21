@@ -93,3 +93,30 @@ def structure_triangular_pairs(coin_list):
 
     print("Amount of found triangular pairs: ", len(triangular_pairs_list))
     return triangular_pairs_list
+
+
+# Structure prices
+def get_price_for_t_pair(t_pair, prices_json):
+
+    # Extract pair info
+    pair_a = t_pair["pair_a"]
+    pair_b = t_pair["pair_b"]
+    pair_c = t_pair["pair_c"]
+
+    # Extract the price information for given pairs
+    pair_a_ask = prices_json[pair_a]["lowestAsk"]
+    pair_a_bid = prices_json[pair_a]["highestBid"]
+    pair_b_ask = prices_json[pair_b]["lowestAsk"]
+    pair_b_bid = prices_json[pair_b]["highestBid"]
+    pair_c_ask = prices_json[pair_c]["lowestAsk"]
+    pair_c_bid = prices_json[pair_c]["highestBid"]
+
+    # Output dict
+    return {
+        "pair_a_ask": pair_a_ask,
+        "pair_a_bid": pair_a_bid,
+        "pair_b_ask": pair_b_ask,
+        "pair_b_bid": pair_b_bid,
+        "pair_c_ask": pair_c_ask,
+        "pair_c_bid": pair_c_bid,
+    }
