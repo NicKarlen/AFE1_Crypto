@@ -26,6 +26,7 @@ def collect_tradeables(json_obj):
 # Structure Arbitrage Pairs
 def structure_triangular_pairs(coin_list):
 
+    print("Structure Arbitrage Pairs - Running")
     # Declare Variables:
     triangular_pairs_list = []
     remove_dublicates_list = []
@@ -90,4 +91,5 @@ def structure_triangular_pairs(coin_list):
                                     triangular_pairs_list.append(match_dict)
                                     remove_dublicates_list.append(unique_item)
 
+    print("Amount of found triangular pairs: ", len(triangular_pairs_list))
     return triangular_pairs_list
