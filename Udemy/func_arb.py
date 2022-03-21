@@ -37,9 +37,6 @@ def structure_triangular_pairs(coin_list):
         a_base = pair_a_split[0]
         a_quote = pair_a_split[1]
 
-        # Assign A to a Box
-        a_pair_box = [a_base, a_quote]
-
         # Get Pair B
         for pair_b in pairs_list:
             pair_b_split = pair_b.split("_")
@@ -48,7 +45,7 @@ def structure_triangular_pairs(coin_list):
 
             # Check Pair B
             if pair_b != pair_a:
-                if b_base in a_pair_box or b_quote in a_pair_box:
+                if b_base in pair_a_split or b_quote in pair_a_split:
 
                     # Get Pair C
                     for pair_c in pairs_list:
