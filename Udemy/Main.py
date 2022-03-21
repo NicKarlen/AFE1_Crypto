@@ -61,6 +61,8 @@ def step_2():
     # Loop through and get structured price information
     for t_pair in structured_pairs:
         prices_dict = func_arb.get_price_for_t_pair(t_pair, prices_json)
+        surface_arb = func_arb.calc_triangular_arb_surface_rate(
+            t_pair, prices_dict)
 
 
 """ Main """
