@@ -168,6 +168,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         swap_1_rate = 0
         swap_2_rate = 0
         swap_3_rate = 0
+        # acquired_coin_t3 = 0 -----> if you want to use the print statment enable this or else you always get forward and backward
 
         """
             ---------->>>>>>>>>>>>> The rules for the POLONIEX <<<<<<<<<<<<------------
@@ -399,7 +400,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 calculated = 1
 
         # if acquired_coin_t3 > starting_amount:
-        #     print(direction, contract_1, contract_2, contract_3,
+        #     print(t_pair["combined"], direction, contract_1, contract_2, contract_3,
         #           starting_amount, acquired_coin_t3)
 
         """ PROFIT LOSS OUTPUT """
@@ -411,4 +412,6 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
 
         # Trade Description
         trade_description_1 = f"Start with {swap_1} of {starting_amount}. Swap at {swap_1_rate} for {swap_2} acquiring {acquired_coin_t1}"
-        print(trade_description_1)
+        trade_description_2 = f"Swap {acquired_coin_t1} of {swap_2} at {swap_2_rate} for {swap_3} acquiring {acquired_coin_t2}"
+
+        # print(trade_description_1)
