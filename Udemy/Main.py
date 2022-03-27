@@ -1,5 +1,6 @@
 import func_arb
 import json
+import time
 
 # Set Variables
 
@@ -63,13 +64,18 @@ def step_2():
         prices_dict = func_arb.get_price_for_t_pair(t_pair, prices_json)
         surface_arb = func_arb.calc_triangular_arb_surface_rate(
             t_pair, prices_dict)
+        if len(surface_arb):
+            print("NEW TRADE:")
+            print(surface_arb["trade_description_1"])
+            print(surface_arb["trade_description_2"])
+            print(surface_arb["trade_description_3"])
 
 
 """ Main """
 if __name__ == "__main__":
     # coin_list = step_0()
-    # structured_pairs = step_1(coin_list)
-    step_2()
-    # step_3()
+    # step_1(coin_list)
+    # step_2()
+    func_arb.get_depth_from_orderbook()
     # step_4()
     print("code done -----------!!!!!!!!!!!!!!!!!")

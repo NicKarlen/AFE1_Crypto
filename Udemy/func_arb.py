@@ -413,5 +413,71 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # Trade Description
         trade_description_1 = f"Start with {swap_1} of {starting_amount}. Swap at {swap_1_rate} for {swap_2} acquiring {acquired_coin_t1}"
         trade_description_2 = f"Swap {acquired_coin_t1} of {swap_2} at {swap_2_rate} for {swap_3} acquiring {acquired_coin_t2}"
+        trade_description_3 = f"Swap {acquired_coin_t2} of {swap_3} at {swap_3_rate} for {swap_1} acquiring {acquired_coin_t3}"
 
-        # print(trade_description_1)
+        # if profit_loss > 0:
+        #     print("NEW TRADE")
+        #     print(trade_description_1)
+        #     print(trade_description_2)
+        #     print(trade_description_3)
+        #     print(direction, pair_a, pair_b, pair_c)
+
+        # Output Results
+        if profit_loss_perc > min_surface_rate:
+            surface_dict = {
+                "swap_1": swap_1,
+                "swap_2": swap_2,
+                "swap_3": swap_3,
+                "contract_1": contract_1,
+                "contract_2": contract_2,
+                "contract_3": contract_3,
+                "direction_trade_1": direction_trade_1,
+                "direction_trade_2": direction_trade_2,
+                "direction_trade_3": direction_trade_3,
+                "starting_amount": starting_amount,
+                "acquired_coin_t1": acquired_coin_t1,
+                "acquired_coin_t2": acquired_coin_t2,
+                "acquired_coin_t3": acquired_coin_t3,
+                "swap_1_rate": swap_1_rate,
+                "swap_2_rate": swap_2_rate,
+                "swap_3_rate": swap_3_rate,
+                "profit_loss": profit_loss,
+                "profit_loss_perc": profit_loss_perc,
+                "direction": direction,
+                "trade_description_1": trade_description_1,
+                "trade_description_2": trade_description_2,
+                "trade_description_3": trade_description_3
+            }
+            return surface_dict
+    return surface_dict
+
+
+# Get the depth from the orderbook
+def get_depth_from_orderbook():
+    """
+        Challenges
+        Full amount of available amount in can be eaten on the first level (lvl 0)
+        Some of the amount in can be eaten up by multiple lvls
+        Some coins may not have enough liquidity
+    """
+    # Extract initial variables
+    swap_1 = "USDT"
+    starting_amount = 1
+    starting_amount_dict = {
+        "USDT": 100,
+        "USDC": 100,
+        "BTC": 0.05,
+        "ETH": 0.1
+    }
+    if swap_1 in starting_amount_dict:
+        starting_amount = starting_amount_dict[swap_1]
+
+    # Define pairs
+    contract_1 = "USDT_BTC"
+    contract_2 = "BTC_INJ"
+    contract_3 = "USDT_INJ"
+
+    # Define direction for trades
+    contract_1_direction = "baseToQuote"
+    contract_2_direction = "baseToQuote"
+    contract_3_direction = "quoteToBase"
