@@ -518,11 +518,11 @@ def calculate_acquired_coin(amount_in, orderbook):
 
 
 # Get the depth from the orderbook
-def get_depth_from_orderbook():
+def get_depth_from_orderbook(surface_arb):
 
     # Extract initial variables
-    swap_1 = "USDT"
-    starting_amount = 1
+    swap_1 = surface_arb["swap_1"]
+    starting_amount = 100
     starting_amount_dict = {
         "USDT": 100,
         "USDC": 100,
@@ -533,14 +533,14 @@ def get_depth_from_orderbook():
         starting_amount = starting_amount_dict[swap_1]
 
     # Define pairs
-    contract_1 = "USDT_BTC"
-    contract_2 = "BTC_INJ"
-    contract_3 = "USDT_INJ"
+    contract_1 = surface_arb["contract_1"]
+    contract_2 = surface_arb["contract_2"]
+    contract_3 = surface_arb["contract_3"]
 
     # Define direction for trades
-    contract_1_direction = "baseToQuote"
-    contract_2_direction = "baseToQuote"
-    contract_3_direction = "quoteToBase"
+    contract_1_direction = surface_arb["direction_trade_1"]
+    contract_2_direction = surface_arb["direction_trade_2"]
+    contract_3_direction = surface_arb["direction_trade_3"]
 
     # Get orderbook for first trade assessment
     url1 = f"https://poloniex.com/public?command=returnOrderBook&currencyPair={contract_1}&depth=20"
@@ -578,7 +578,7 @@ def get_depth_from_orderbook():
     real_rate_perc = (profit_loss / starting_amount) * \
         100 if profit_loss != 0 else 0
 
-    if real_rate_perc > -1:
+    if real_rate_perc > -100:
         return_dict = {
             "profit_loss": profit_loss,
             "real_rate_perc": real_rate_perc,
