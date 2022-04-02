@@ -9,7 +9,7 @@ coin_price_url = "https://poloniex.com/public?command=returnTicker"
 """
     Step 0: Finding coins which can be traded
     Exchange: Poloniex
-    https://docs.poloniex.com/#introduction 
+    https://docs.poloniex.com/#introduction
 """
 
 
@@ -64,11 +64,12 @@ def step_2():
         prices_dict = func_arb.get_price_for_t_pair(t_pair, prices_json)
         surface_arb = func_arb.calc_triangular_arb_surface_rate(
             t_pair, prices_dict)
-        if len(surface_arb):
+        if len(surface_arb) and surface_arb["profit_loss_perc"] > 0.3:
             print("NEW TRADE:")
             print(surface_arb["trade_description_1"])
             print(surface_arb["trade_description_2"])
             print(surface_arb["trade_description_3"])
+            print(surface_arb["profit_loss_perc"])
 
 
 """ Main """

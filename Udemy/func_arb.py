@@ -456,9 +456,9 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
 def get_depth_from_orderbook():
     """
         Challenges
-        Full amount of available amount in can be eaten on the first level (lvl 0)
-        Some of the amount in can be eaten up by multiple lvls
-        Some coins may not have enough liquidity
+        - Full amount of available amount in can be eaten on the first level (lvl 0)
+        - Some of the amount in can be eaten up by multiple lvls
+        - Some coins may not have enough liquidity
     """
     # Extract initial variables
     swap_1 = "USDT"
@@ -481,3 +481,7 @@ def get_depth_from_orderbook():
     contract_1_direction = "baseToQuote"
     contract_2_direction = "baseToQuote"
     contract_3_direction = "quoteToBase"
+
+    # Get orderbook for first trade assessment
+    url1 = f"https://poloniex.com/public?command=returnOrderBook&currencyPair={contract_1}&depth=20"
+    depth_1_prices = get_coin_tickers(url1)
