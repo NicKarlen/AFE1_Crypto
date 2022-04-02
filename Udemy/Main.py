@@ -1,6 +1,7 @@
 import func_arb
 import json
 import time
+from datetime import datetime
 
 # Set Variables
 
@@ -69,8 +70,12 @@ def step_2():
 
             if len(real_rate_arb) > 0:
                 if real_rate_arb["real_rate_perc"] > 0.1:
+
+                    now = datetime.now()
+                    current_time = now.strftime("%H:%M:%S")
+
                     print("NEW TRADE: Surface profit percent = ",
-                          surface_arb["profit_loss_perc"])
+                          surface_arb["profit_loss_perc"], "  Timestamp: ", current_time)
                     print(real_rate_arb)
             time.sleep(1)
 
