@@ -68,7 +68,7 @@ def step_2():
             real_rate_arb = func_arb.get_depth_from_orderbook(surface_arb)
 
             if len(real_rate_arb) > 0:
-                if real_rate_arb["real_rate_perc"] > 0:
+                if real_rate_arb["real_rate_perc"] > 0.1:
                     print("NEW TRADE: Surface profit percent = ",
                           surface_arb["profit_loss_perc"])
                     print(real_rate_arb)
