@@ -77,6 +77,7 @@ if __name__ == "__main__":
     # coin_list = step_0()
     # step_1(coin_list)
     # step_2()
-    func_arb.get_depth_from_orderbook()
+    real_rate_arb = func_arb.get_depth_from_orderbook()
     # step_4()
+    print(real_rate_arb)
     print("code done -----------!!!!!!!!!!!!!!!!!")
