@@ -20,7 +20,8 @@ def collect_tradeables(json_obj):
     for coin in json_obj:
         spot_trading_allowed = coin["isSpotTradingAllowed"]
         if spot_trading_allowed == True:
-            coin_list.append(coin)
+            pair = coin["baseAsset"] + "_" + coin["quoteAsset"]
+            coin_list.append(pair)
     return coin_list
 
 

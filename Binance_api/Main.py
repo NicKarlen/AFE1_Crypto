@@ -42,7 +42,7 @@ def step_1(coin_list):
     structured_list = func_arb.structure_triangular_pairs(coin_list)
 
     # Save structured list
-    with open("Udemy/data/structured_triangular_pairs.json", "w") as fp:
+    with open("Binance_api/data/structured_triangular_pairs.json", "w") as fp:
         json.dump(structured_list, fp)
 
 
@@ -81,8 +81,8 @@ def step_2():
 """ Main """
 if __name__ == "__main__":
     coin_list = step_0()
-    print(coin_list[0:3])
-    # step_1(coin_list)
+    # print(coin_list)
+    step_1(coin_list)
     # while True:
     #     step_2()
 
