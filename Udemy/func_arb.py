@@ -513,7 +513,6 @@ def calculate_acquired_coin(amount_in, orderbook):
         # Exit if not enough orderbook lvls
         counts += 1
         if counts == len(orderbook):
-            print("not enought depth!!!")
             return 0
 
 
@@ -559,6 +558,7 @@ def get_depth_from_orderbook(surface_arb):
     depth_3_prices = get_coin_tickers(url3)
     depth_3_reformatted_prices = reformatted_orderbook(
         depth_3_prices, contract_3_direction)
+    time.sleep(0.3)
 
     # Get acquired coins
     acquired_coin_t1 = calculate_acquired_coin(
