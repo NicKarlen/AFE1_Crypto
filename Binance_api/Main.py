@@ -5,12 +5,12 @@ from datetime import datetime
 
 # Set Variables
 
-coin_price_url = "https://poloniex.com/public?command=returnTicker"
+coin_price_url = "https://api.binance.com/api/v3/exchangeInfo"
 
 """
     Step 0: Finding coins which can be traded
-    Exchange: Poloniex
-    https://docs.poloniex.com/#introduction
+    Exchange: Binance
+    https://binance-docs.github.io/apidocs/spot/en/#exchange-information
 """
 
 
@@ -20,11 +20,11 @@ def step_0():
     coin_json = func_arb.get_coin_tickers(coin_price_url)
 
     # Loop trough each objects and find the tradable pairs
-    coin_list = func_arb.collect_tradeables(coin_json)
+    coin_list = func_arb.collect_tradeables(coin_json["symbols"])
 
     # Print out the amout of all tradingpairs and the amount after checking if they are tradable
     print("All the pairs that can be traded - ", "Full list: ",
-          len(coin_json), " Cleaned up list: ", len(coin_list))
+          len(coin_json["symbols"]), " Cleaned up list: ", len(coin_list))
 
     # Return list of tradeable coins
     return coin_list
@@ -80,9 +80,10 @@ def step_2():
 
 """ Main """
 if __name__ == "__main__":
-    # coin_list = step_0()
+    coin_list = step_0()
+    print(coin_list[0:3])
     # step_1(coin_list)
-    while True:
-        step_2()
+    # while True:
+    #     step_2()
 
     print("code done -----------!!!!!!!!!!!!!!!!!")
