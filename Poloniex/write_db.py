@@ -4,7 +4,7 @@ import sqlite3
 def write_trade_in_db(timestamp, surface_rate_profit_loss_perc, real_rate_profit_loss_perc, contract_1, contract_2, contract_3):
 
     # Connect to database 'database.db'
-    conn = sqlite3.connect('Udemy/data/database.db')
+    conn = sqlite3.connect('Poloniex/data/database.db')
 
     # Create a cursor for db
     cursor = conn.cursor()
