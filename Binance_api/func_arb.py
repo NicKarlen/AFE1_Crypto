@@ -15,11 +15,13 @@ def get_coin_tickers(url):
 
 
 # Loop through each object and find the tradable pairs
+# Info for status on the binance api: https://dev.binance.vision/t/explanation-on-symbol-status/118
 def collect_tradeables(json_obj):
     coin_list = []
     for coin in json_obj:
         spot_trading_allowed = coin["isSpotTradingAllowed"]
-        if spot_trading_allowed == True:
+        trading_status = coin["status"]
+        if spot_trading_allowed == True and trading_status == "TRADING":
             pair = coin["baseAsset"] + "_" + coin["quoteAsset"]
             coin_list.append(pair)
     return coin_list
@@ -163,6 +165,11 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
     c_ask = prices_dict["pair_c_ask"]
     c_bid = prices_dict["pair_c_bid"]
 
+    # Check if prices are not 0
+    if a_ask == 0 or a_bid == 0 or b_ask == 0 or b_bid == 0 or c_ask == 0 or c_bid == 0:
+        print("price is 0")
+        return surface_dict
+
     # Set directions and loop through
     direction_list = ["forward", "reverse"]
     for direction in direction_list:
@@ -174,7 +181,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         swap_1_rate = 0
         swap_2_rate = 0
         swap_3_rate = 0
-        # acquired_coin_t3 = 0 -----> if you want to use the print statment enable this or else you always get forward and backward
+        acquired_coin_t3 = 0
 
         """
             ---------->>>>>>>>>>>>> The rules for the BINANCE <<<<<<<<<<<<------------
@@ -201,7 +208,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         contract_1 = pair_a
         acquired_coin_t1 = starting_amount * swap_1_rate
 
-        #print(direction, pair_a, starting_amount, acquired_coin_t1)
+        # print(direction, pair_a, starting_amount, acquired_coin_t1)
 
         """  FORWARD  """
         # SCENARIO 1: Check if a_quote (acquired_coin) matches b_quote
