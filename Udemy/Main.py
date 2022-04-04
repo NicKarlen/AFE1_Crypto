@@ -69,7 +69,7 @@ def step_2():
         if len(surface_arb) > 0:
             real_rate_arb = func_arb.get_depth_from_orderbook(surface_arb)
             if len(real_rate_arb) > 0:
-                if real_rate_arb["real_rate_perc"] > 0.1:
+                if real_rate_arb["real_rate_perc"] > 0.05:
 
                     now = datetime.now()
                     current_time = now.strftime("%H:%M:%S")
