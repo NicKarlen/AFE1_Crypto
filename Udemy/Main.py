@@ -68,12 +68,12 @@ def step_2():
         if len(surface_arb) > 0:
             real_rate_arb = func_arb.get_depth_from_orderbook(surface_arb)
             if len(real_rate_arb) > 0:
-                if real_rate_arb["real_rate_perc"] > 0.1:
+                if real_rate_arb["real_rate_perc"] > 0:
 
                     now = datetime.now()
                     current_time = now.strftime("%H:%M:%S")
 
-                    print("NEW TRADE: Surface profit percent = ",
+                    print("NEW TRADE:", surface_arb["direction"], " Surface profit percent= ",
                           surface_arb["profit_loss_perc"], "  Timestamp: ", current_time)
                     print(real_rate_arb)
 

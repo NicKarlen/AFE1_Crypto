@@ -170,7 +170,8 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         swap_1_rate = 0
         swap_2_rate = 0
         swap_3_rate = 0
-        # acquired_coin_t3 = 0 -----> if you want to use the print statment enable this or else you always get forward and backward
+        acquired_coin_t3 = 0
+        calculated = 0
 
         """
             ---------->>>>>>>>>>>>> The rules for the POLONIEX <<<<<<<<<<<<------------
