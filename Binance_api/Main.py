@@ -67,7 +67,10 @@ def step_2():
         prices_dict = func_arb.get_price_for_t_pair(t_pair, prices_json)
         surface_arb = func_arb.calc_triangular_arb_surface_rate(
             t_pair, prices_dict)
-        # if len(surface_arb) > 0:
+
+        if len(surface_arb) > 0:
+            # print(surface_arb)
+            pass
         #     print("NEW TRADE: Surface profit percent = ",
         #           surface_arb["profit_loss_perc"])
 

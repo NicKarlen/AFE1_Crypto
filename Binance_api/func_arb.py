@@ -182,6 +182,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         swap_2_rate = 0
         swap_3_rate = 0
         acquired_coin_t3 = 0
+        calculated = 0
 
         """
             ---------->>>>>>>>>>>>> The rules for the BINANCE <<<<<<<<<<<<------------
@@ -417,7 +418,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         #           starting_amount, acquired_coin_t3)
 
         """ PROFIT LOSS OUTPUT """
-
+        # print(direction, "--------  ", acquired_coin_t3 - starting_amount)
         # Profit and Loss Calculation
         profit_loss = acquired_coin_t3 - starting_amount
         profit_loss_perc = (profit_loss / starting_amount) * \
