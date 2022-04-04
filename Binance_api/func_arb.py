@@ -101,17 +101,21 @@ def structure_triangular_pairs(coin_list):
 def get_price_for_t_pair(t_pair, prices_json):
 
     # Extract pair info
-    pair_a = t_pair["pair_a"]
-    pair_b = t_pair["pair_b"]
-    pair_c = t_pair["pair_c"]
+    pair_a_no_underline = t_pair["a_base"] + t_pair["a_quote"]
+    pair_b_no_underline = t_pair["b_base"] + t_pair["b_quote"]
+    pair_c_no_underline = t_pair["c_base"] + t_pair["c_quote"]
 
     # Extract the price information for given pairs
-    pair_a_ask = float(prices_json[pair_a]["lowestAsk"])
-    pair_a_bid = float(prices_json[pair_a]["highestBid"])
-    pair_b_ask = float(prices_json[pair_b]["lowestAsk"])
-    pair_b_bid = float(prices_json[pair_b]["highestBid"])
-    pair_c_ask = float(prices_json[pair_c]["lowestAsk"])
-    pair_c_bid = float(prices_json[pair_c]["highestBid"])
+    for coin in prices_json:
+        if coin["symbol"] == pair_a_no_underline:
+            pair_a_ask = float(coin["askPrice"])
+            pair_a_bid = float(coin["bidPrice"])
+        if coin["symbol"] == pair_b_no_underline:
+            pair_b_ask = float(coin["askPrice"])
+            pair_b_bid = float(coin["bidPrice"])
+        if coin["symbol"] == pair_c_no_underline:
+            pair_c_ask = float(coin["askPrice"])
+            pair_c_bid = float(coin["bidPrice"])
 
     # Output dict
     return {
@@ -173,24 +177,24 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # acquired_coin_t3 = 0 -----> if you want to use the print statment enable this or else you always get forward and backward
 
         """
-            ---------->>>>>>>>>>>>> The rules for the POLONIEX <<<<<<<<<<<<------------
+            ---------->>>>>>>>>>>>> The rules for the BINANCE <<<<<<<<<<<<------------
 
-            if we are swaping the coin on the left (base) to the right (quote) then * 1/Ask
-            if we are swaping the coin on the right (quote) to the left (base) then * Bid
+            if we are swaping the coin on the left (base) to the right (quote) then * Bid
+            if we are swaping the coin on the right (quote) to the left (base) then * 1/Ask
         """
 
         # Assume starting with a_base and swapping for a_quote
         if direction == "forward":
             swap_1 = a_base
             swap_2 = a_quote
-            swap_1_rate = 1 / a_ask
+            swap_1_rate = a_bid
             direction_trade_1 = "baseToQuote"
 
         # Assume starting with a_quote and swapping for a_base
         if direction == "reverse":
             swap_1 = a_quote
             swap_2 = a_base
-            swap_1_rate = a_bid
+            swap_1_rate = 1 / a_ask
             direction_trade_1 = "quoteToBase"
 
         # Place first trade
@@ -203,7 +207,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 1: Check if a_quote (acquired_coin) matches b_quote
         if direction == "forward":
             if a_quote == b_quote and calculated == 0:
-                swap_2_rate = b_bid
+                swap_2_rate = 1 / b_ask
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "quoteToBase"
                 contract_2 = pair_b
@@ -211,14 +215,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if b_base (acquired coin) matches c_base
                 if b_base == c_base:
                     swap_3 = c_base
-                    swap_3_rate = 1 / c_ask
+                    swap_3_rate = c_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_c
 
                 # if b_base (acquired coin) matches c_quote
                 if b_base == c_quote:
                     swap_3 = c_quote
-                    swap_3_rate = c_bid
+                    swap_3_rate = 1 / c_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_c
 
@@ -228,7 +232,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 2: Check if a_quote (acquired_coin) matches b_base
         if direction == "forward":
             if a_quote == b_base and calculated == 0:
-                swap_2_rate = 1 / b_ask
+                swap_2_rate = b_bid
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "baseToQuote"
                 contract_2 = pair_b
@@ -236,14 +240,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if b_quote (acquired coin) matches c_base
                 if b_quote == c_base:
                     swap_3 = c_base
-                    swap_3_rate = 1 / c_ask
+                    swap_3_rate = c_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_c
 
                 # if b_quote (acquired coin) matches c_quote
                 if b_quote == c_quote:
                     swap_3 = c_quote
-                    swap_3_rate = c_bid
+                    swap_3_rate = 1 / c_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_c
 
@@ -253,7 +257,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 3: Check if a_quote (acquired_coin) matches c_quote
         if direction == "forward":
             if a_quote == c_quote and calculated == 0:
-                swap_2_rate = c_bid
+                swap_2_rate = 1 / c_ask
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "quoteToBase"
                 contract_2 = pair_c
@@ -261,14 +265,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if c_base (acquired coin) matches b_base
                 if c_base == b_base:
                     swap_3 = b_base
-                    swap_3_rate = 1 / b_ask
+                    swap_3_rate = b_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_b
 
                 # if c_base (acquired coin) matches b_quote
                 if c_base == b_quote:
                     swap_3 = b_quote
-                    swap_3_rate = b_bid
+                    swap_3_rate = 1 / b_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_b
 
@@ -278,7 +282,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 4: Check if a_quote (acquired_coin) matches c_base
         if direction == "forward":
             if a_quote == c_base and calculated == 0:
-                swap_2_rate = 1 / c_ask
+                swap_2_rate = c_bid
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "baseToQuote"
                 contract_2 = pair_c
@@ -286,14 +290,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if c_quote (acquired coin) matches b_base
                 if c_quote == b_base:
                     swap_3 = b_base
-                    swap_3_rate = 1 / b_ask
+                    swap_3_rate = b_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_b
 
                 # if c_quote (acquired coin) matches b_quote
                 if c_quote == b_quote:
                     swap_3 = b_quote
-                    swap_3_rate = b_bid
+                    swap_3_rate = 1 / b_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_b
 
@@ -304,7 +308,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 1: Check if a_base (acquired_coin) matches b_quote
         if direction == "reverse":
             if a_base == b_quote and calculated == 0:
-                swap_2_rate = b_bid
+                swap_2_rate = 1 / b_ask
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "quoteToBase"
                 contract_2 = pair_b
@@ -312,14 +316,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if b_base (acquired coin) matches c_base
                 if b_base == c_base:
                     swap_3 = c_base
-                    swap_3_rate = 1 / c_ask
+                    swap_3_rate = c_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_c
 
                 # if b_base (acquired coin) matches c_quote
                 if b_base == c_quote:
                     swap_3 = c_quote
-                    swap_3_rate = c_bid
+                    swap_3_rate = 1 / c_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_c
 
@@ -329,7 +333,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 2: Check if a_base (acquired_coin) matches b_base
         if direction == "reverse":
             if a_base == b_base and calculated == 0:
-                swap_2_rate = 1 / b_ask
+                swap_2_rate = b_bid
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "baseToQuote"
                 contract_2 = pair_b
@@ -337,14 +341,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if b_quote (acquired coin) matches c_base
                 if b_quote == c_base:
                     swap_3 = c_base
-                    swap_3_rate = 1 / c_ask
+                    swap_3_rate = c_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_c
 
                 # if b_quote (acquired coin) matches c_quote
                 if b_quote == c_quote:
                     swap_3 = c_quote
-                    swap_3_rate = c_bid
+                    swap_3_rate = 1 / c_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_c
 
@@ -354,7 +358,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 3: Check if a_base (acquired_coin) matches c_quote
         if direction == "reverse":
             if a_base == c_quote and calculated == 0:
-                swap_2_rate = c_bid
+                swap_2_rate = 1 / c_ask
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "quoteToBase"
                 contract_2 = pair_c
@@ -362,14 +366,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if c_base (acquired coin) matches b_base
                 if c_base == b_base:
                     swap_3 = b_base
-                    swap_3_rate = 1 / b_ask
+                    swap_3_rate = b_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_b
 
                 # if c_base (acquired coin) matches b_quote
                 if c_base == b_quote:
                     swap_3 = b_quote
-                    swap_3_rate = b_bid
+                    swap_3_rate = 1 / b_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_b
 
@@ -379,7 +383,7 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
         # SCENARIO 4: Check if a_base (acquired_coin) matches c_base
         if direction == "reverse":
             if a_base == c_base and calculated == 0:
-                swap_2_rate = 1 / c_ask
+                swap_2_rate = c_bid
                 acquired_coin_t2 = acquired_coin_t1 * swap_2_rate
                 direction_trade_2 = "baseToQuote"
                 contract_2 = pair_c
@@ -387,14 +391,14 @@ def calc_triangular_arb_surface_rate(t_pair, prices_dict):
                 # if c_quote (acquired coin) matches b_base
                 if c_quote == b_base:
                     swap_3 = b_base
-                    swap_3_rate = 1 / b_ask
+                    swap_3_rate = b_bid
                     direction_trade_3 = "baseToQuote"
                     contract_3 = pair_b
 
                 # if c_quote (acquired coin) matches b_quote
                 if c_quote == b_quote:
                     swap_3 = b_quote
-                    swap_3_rate = b_bid
+                    swap_3_rate = 1 / b_ask
                     direction_trade_3 = "quoteToBase"
                     contract_3 = pair_b
 

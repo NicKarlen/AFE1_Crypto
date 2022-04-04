@@ -5,7 +5,9 @@ from datetime import datetime
 
 # Set Variables
 
-coin_price_url = "https://api.binance.com/api/v3/exchangeInfo"
+exchangeInfo = "https://api.binance.com/api/v3/exchangeInfo"
+coin_price_url = "https://api.binance.com/api/v3/ticker/bookTicker"
+
 
 """
     Step 0: Finding coins which can be traded
@@ -17,7 +19,7 @@ coin_price_url = "https://api.binance.com/api/v3/exchangeInfo"
 def step_0():
 
     # Extract list of coins and prices from Exchange
-    coin_json = func_arb.get_coin_tickers(coin_price_url)
+    coin_json = func_arb.get_coin_tickers(exchangeInfo)
 
     # Loop trough each objects and find the tradable pairs
     coin_list = func_arb.collect_tradeables(coin_json["symbols"])
@@ -54,7 +56,7 @@ def step_1(coin_list):
 def step_2():
 
     # Get Structured Pairs
-    with open("Udemy/data/structured_triangular_pairs.json") as json_file:
+    with open("Binance_api/data/structured_triangular_pairs.json") as json_file:
         structured_pairs = json.load(json_file)
 
     # Get latest surface prices
@@ -65,25 +67,27 @@ def step_2():
         prices_dict = func_arb.get_price_for_t_pair(t_pair, prices_json)
         surface_arb = func_arb.calc_triangular_arb_surface_rate(
             t_pair, prices_dict)
-        if len(surface_arb) > 0:
-            real_rate_arb = func_arb.get_depth_from_orderbook(surface_arb)
-            if len(real_rate_arb) > 0:
-                if real_rate_arb["real_rate_perc"] > 0.1:
+        # if len(surface_arb) > 0:
+        #     print("NEW TRADE: Surface profit percent = ",
+        #           surface_arb["profit_loss_perc"])
 
-                    now = datetime.now()
-                    current_time = now.strftime("%H:%M:%S")
+        # real_rate_arb = func_arb.get_depth_from_orderbook(surface_arb)
+        # if len(real_rate_arb) > 0:
+        #     if real_rate_arb["real_rate_perc"] > 0.1:
 
-                    print("NEW TRADE: Surface profit percent = ",
-                          surface_arb["profit_loss_perc"], "  Timestamp: ", current_time)
-                    print(real_rate_arb)
+        #         now = datetime.now()
+        #         current_time = now.strftime("%H:%M:%S")
+
+        #         print("NEW TRADE: Surface profit percent = ",
+        #               surface_arb["profit_loss_perc"], "  Timestamp: ", current_time)
+        #         print(real_rate_arb)
 
 
 """ Main """
 if __name__ == "__main__":
-    coin_list = step_0()
-    # print(coin_list)
-    step_1(coin_list)
+    # coin_list = step_0()
+    # step_1(coin_list)
     # while True:
-    #     step_2()
+    step_2()
 
     print("code done -----------!!!!!!!!!!!!!!!!!")
