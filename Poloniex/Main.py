@@ -43,7 +43,7 @@ def step_1(coin_list):
     structured_list = func_arb.structure_triangular_pairs(coin_list)
 
     # Save structured list
-    with open("Udemy/data/structured_triangular_pairs.json", "w") as fp:
+    with open("Poloniex/data/structured_triangular_pairs.json", "w") as fp:
         json.dump(structured_list, fp)
 
 
@@ -55,7 +55,7 @@ def step_1(coin_list):
 def step_2():
 
     # Get Structured Pairs
-    with open("Udemy/data/structured_triangular_pairs.json") as json_file:
+    with open("Poloniex/data/structured_triangular_pairs.json") as json_file:
         structured_pairs = json.load(json_file)
 
     # Get latest surface prices
