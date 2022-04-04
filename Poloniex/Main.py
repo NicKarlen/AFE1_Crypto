@@ -72,7 +72,7 @@ def step_2():
                 if real_rate_arb["real_rate_perc"] > 0.05:
 
                     now = datetime.now()
-                    current_time = now.strftime("%H:%M:%S")
+                    current_time = now.strftime("%m/%d/%Y, %H:%M:%S")
                     write_db.write_trade_in_db(current_time, surface_arb["profit_loss_perc"], real_rate_arb["real_rate_perc"],
                                                real_rate_arb["contract_1"], real_rate_arb["contract_2"], real_rate_arb["contract_3"])
 

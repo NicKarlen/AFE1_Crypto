@@ -7,7 +7,14 @@ import time
 # Make a get request
 def get_coin_tickers(url):
     req = requests.get(url)
-    json_response = json.loads(req.text)
+    try:
+        json_response = json.loads(req.text)
+    except:
+        print(req.text)
+        time.sleep(1)
+        req = requests.get(url)
+        json_response = json.loads(req.text)
+
     if req.status_code != 200:
         print("requst from get_coin_ticker was not sucsessful, Code: " + req.status_code)
     else:
