@@ -2320,18 +2320,6 @@
         "b_base": "USDT",
         "c_base": "TRX",
         "a_quote": "TRX",
-        "b_quote": "SUNOLD",
-        "c_quote": "SUNOLD",
-        "pair_a": "USDT_TRX",
-        "pair_b": "USDT_SUNOLD",
-        "pair_c": "TRX_SUNOLD",
-        "combined": "USDT_TRX,USDT_SUNOLD,TRX_SUNOLD"
-    },
-    {
-        "a_base": "USDT",
-        "b_base": "USDT",
-        "c_base": "TRX",
-        "a_quote": "TRX",
         "b_quote": "DICE",
         "c_quote": "DICE",
         "pair_a": "USDT_TRX",
